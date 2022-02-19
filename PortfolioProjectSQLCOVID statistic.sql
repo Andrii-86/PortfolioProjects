@@ -49,16 +49,16 @@ order by 4 desc
 
  --Looking at total population vs vactinations
 
-		 Select dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations, 
-		 SUM(cast(vac.new_vaccinations as bigint)) 
-		 OVER (Partition by dea.Location Order by dea.location, 
-		 dea.date) as RollingPeopleVaccinated
-		 From [Portfolio Project]..CovidDeaths dea
-		 Join [Portfolio Project]..CovidVacctinations vac
-			On dea.location = vac.location
-			and dea.date = vac.date
-		 where dea.continent is not null
-		 order by 2,3
+ Select dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations, 
+	SUM(cast(vac.new_vaccinations as bigint)) 
+        OVER (Partition by dea.Location Order by dea.location, 
+        dea.date) as RollingPeopleVaccinated
+ From [Portfolio Project]..CovidDeaths dea
+ Join [Portfolio Project]..CovidVacctinations vac
+	On dea.location = vac.location
+	and dea.date = vac.date
+ where dea.continent is not null
+ order by 2,3
 
 -- Using CTE to perform Calculation on Partition By in previous query
 
